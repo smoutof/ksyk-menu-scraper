@@ -54,9 +54,9 @@ def getMenu():
             elif i.text.lower() == 'leipäpöytä' or i.text.lower() == 'ruokajuoma':
                 pass
             else:
-                food_list.append( str(i.get_text(" \n ")) )
+                food_list.append( str(i.get_text("\n")) )
 
-        final_string = ' \n '.join(map(str, food_list))
+        final_string = '\n'.join(map(str, food_list))
 
         return final_string
 
