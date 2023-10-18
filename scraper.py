@@ -3,17 +3,33 @@ import requests
 from bs4 import BeautifulSoup
 from flask import Flask, jsonify
 from random import randint
+from datetime import datetime, timezone
 
+# Needed URLs
 ksyk_url = 'https://ksyk.fi/'
-github_repo_url = ''
+github_repo_url = 'https://github.com/smoutof/ksyk-menu-scraper'
+
+# API info
+def getInfo():
+    final = {}
+
+    def getTime():
+        now = datetime.now(timezone.utc)
+        current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+        time = f'{current_time} UTC'
+        return time
+
+    final["github"] = github_repo_url
+    final["data-scraped-from"] = ksyk_url
+    final["time-of-fetch"] = getTime()
+
+    return final
 
 # Get the menu
 def getMenu():
     # Request page
-    global ksyk_url, github_repo_url
 
     page = requests.get(ksyk_url)
-
     soup = BeautifulSoup(page.content, "html.parser") # Turn into soup object
 
     # Find the menu div element
@@ -35,14 +51,14 @@ def getMenu():
         for i in p:
             if i.text == '*':
                 pass
-            elif i.text.lower() == 'leipäpöytä':
-                pass
-            elif i.text.lower() == 'ruokajuoma':
+            elif i.text.lower() == 'leipäpöytä' or i.text.lower() == 'ruokajuoma':
                 pass
             else:
-                food_list.append(i.text)
-        
-        return food_list
+                food_list.append( str(i.get_text(" \n ")) )
+
+        final_string = ' \n '.join(map(str, food_list))
+
+        return final_string
 
     # Make dictionary object with days and foodlist
     def final_d():
@@ -63,6 +79,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return jsonify(getMenu())
+    return jsonify({"API-data":getInfo(),"menu-data":getMenu()})
 
 app.run()
