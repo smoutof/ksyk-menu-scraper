@@ -79,5 +79,3 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return jsonify({"API-data":getInfo(),"menu-data":getMenu()})
-
-app.run(host = '0.0.0.0')
