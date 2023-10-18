@@ -78,4 +78,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return jsonify({"API-data":getInfo(),"menu-data":getMenu()})
+    response = jsonify({"API-data":getInfo(),"menu-data":getMenu()})
+    response.headers.add('Access-Control-Allow-Origin', '*') 
+    return response
