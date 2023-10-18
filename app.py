@@ -49,12 +49,7 @@ def getMenu():
         food_list = []
 
         for i in p:
-            if i.text == '*':
-                pass
-            elif i.text.lower() == 'leipäpöytä' or i.text.lower() == 'ruokajuoma':
-                pass
-            else:
-                food_list.append( str(i.get_text(";")) )
+            food_list.append( str(i.get_text(";")) )
 
         final_string = ';'.join(map(str, food_list))
 
