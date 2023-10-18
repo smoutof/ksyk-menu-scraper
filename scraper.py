@@ -2,7 +2,6 @@
 import requests
 from bs4 import BeautifulSoup
 from flask import Flask, jsonify
-from random import randint
 from datetime import datetime, timezone
 
 # Needed URLs
@@ -81,4 +80,4 @@ app = Flask(__name__)
 def index():
     return jsonify({"API-data":getInfo(),"menu-data":getMenu()})
 
-app.run()
+app.run(host = '0.0.0.0')
