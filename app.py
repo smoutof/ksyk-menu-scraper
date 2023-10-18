@@ -36,6 +36,7 @@ def getMenu():
 
 
     # Day variables, find div element for day
+    week = menu_div.find("li", class_="et_pb_tab_0 et_pb_tab_active")
     monday = menu_div.find("div", class_="et_pb_tab et_pb_tab_1 clearfix")
     tuesday= menu_div.find("div", class_="et_pb_tab et_pb_tab_2 clearfix")
     wednesday = menu_div.find("div", class_="et_pb_tab et_pb_tab_3 clearfix")
@@ -62,8 +63,11 @@ def getMenu():
     # Make dictionary object with days and foodlist
     def final_d():
         final = {}
+        week_a = week.find("a")
+        final["Week"] = week_a.text
+
         days = [monday, tuesday, wednesday, thursday, friday]
-        days_str = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+        days_str = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
         for day in days:
             index = days.index(day)
@@ -74,6 +78,7 @@ def getMenu():
     return final_d()
 
 # Flask App:
+
 app = Flask(__name__)
 
 @app.route('/')
