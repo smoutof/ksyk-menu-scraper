@@ -2,27 +2,13 @@
 import requests
 from bs4 import BeautifulSoup
 from flask import Flask, jsonify
-from datetime import datetime, timezone
 
 # Needed URLs
 ksyk_url = 'https://ksyk.fi/'
 github_repo_url = 'https://github.com/smoutof/ksyk-menu-scraper'
 
-# API info
-def getInfo():
-    final = {}
-
-    def getTime():
-        now = datetime.now(timezone.utc)
-        current_time = now.strftime("%Y-%m-%d %H:%M:%S")
-        time = f'{current_time} UTC'
-        return time
-
-    final["github"] = github_repo_url
-    final["data-scraped-from"] = ksyk_url
-    final["time-of-fetch"] = getTime()
-
-    return final
+#API info
+info = {"github-repo":github_repo_url, "scraped-from":ksyk_url}
 
 # Get the menu
 def getMenu():
@@ -78,6 +64,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    response = jsonify({"API-data":getInfo(),"menu-data":getMenu()})
+    response = jsonify({"API-data":info,"menu-data":getMenu()})
     response.headers.add('Access-Control-Allow-Origin', '*') 
     return response
