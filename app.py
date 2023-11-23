@@ -18,11 +18,11 @@ def getMenu():
     soup = BeautifulSoup(page.content, "html.parser") # Turn into soup object
 
     # Find the menu div element
-    menu_div = soup.find("div", class_="et_pb_column et_pb_column_1_3 et_pb_column_13 et_pb_css_mix_blend_mode_passthrough et-last-child")
+    menu_div = soup.find("div", class_="et_pb_module et_pb_tabs et_pb_tabs_0")
 
 
     # Day variables, find div element for day
-    week = menu_div.find("li", class_="et_pb_tab_0 et_pb_tab_active")
+    week = menu_div.find("li", class_="et_pb_tab_0")
     monday = menu_div.find("div", class_="et_pb_tab et_pb_tab_1 clearfix")
     tuesday= menu_div.find("div", class_="et_pb_tab et_pb_tab_2 clearfix")
     wednesday = menu_div.find("div", class_="et_pb_tab et_pb_tab_3 clearfix")
