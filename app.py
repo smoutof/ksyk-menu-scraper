@@ -38,9 +38,20 @@ def extract_data(page: dict):
             extracted[day].append({package["name"]: meals})
     return extracted
 
+
+
+
 def do_all():
+    # Needed URLs
+    time = datetime.today().strftime('%Y-%m-%d')
+    scrape_url = 'https://www.compass-group.fi/menuapi/week-menus?costCenter=3026&date='+str(time)+'&language=fi'
+    github_repo_url = 'https://github.com/smoutof/ksyk-menu-scraper'
+
+    #API info
+    info = {"github-repo":github_repo_url, "menu-from":scrape_url, "macros-from": "https://www.compass-group.fi/menuapi/recipes/90?language=fi"}
     page = get_page()
-    return extract_data(page)
+    to_return = {"Info": info,"Week": page["weekNumber"], "Menu": extract_data(page)}
+    return to_return
 
 
 
