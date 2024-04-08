@@ -3,7 +3,8 @@ from datetime import datetime
 from flask import Flask, jsonify
 
 def get_page():
-    url = f'https://www.compass-group.fi/menuapi/week-menus?costCenter=3026&date={datetime.today().strftime('%Y-%m-%d')}&language=fi'
+    time = datetime.today().strftime('%Y-%m-%d')
+    url = 'https://www.compass-group.fi/menuapi/week-menus?costCenter=3026&date='+str(time)+'&language=fi'
     page = requests.get(url)
     return json.loads(page.content)
 
