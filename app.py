@@ -48,14 +48,30 @@ def do_all():
     github_repo_url = 'https://github.com/smoutof/ksyk-menu-scraper'
 
     #API info
-    info = {"github-repo":github_repo_url, "menu-from":scrape_url, "macros-from": "https://www.compass-group.fi/menuapi/recipes/90?language=fi"}
+    info = {"github-repo":github_repo_url, "menu-from":scrape_url, "macros-from": "https://www.compass-group.fi/menuapi/recipes/90?language=fi", "last-updated": time}
     page = get_page()
     to_return = {"Info": info,"Week": page["weekNumber"], "Menu": extract_data(page)}
     return to_return
 
 
 
-      
+previous = 0
+data = {}
+
+def now():
+    return datetime.today().strftime('%d')
+
+def last_response():
+    global previous
+    global data
+
+    today = now() 
+
+    if int(today) != previous:
+        data = do_all()
+        previous = int(today)
+        
+    return data
             
 
 # Flask App
@@ -64,6 +80,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    response = jsonify(do_all())
+    response = jsonify(last_response())
     response.headers.add('Access-Control-Allow-Origin', '*') 
     return response
