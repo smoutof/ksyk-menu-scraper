@@ -14,9 +14,10 @@ def get_macros(id: int):
     if not "status" in recipe.keys():
         data = {}
 
-        macro_list = []
+        macro_list = {}
         for macro in recipe["nutritionalValues"]:
-                macro_list.append(macro)
+                macro_list[macro["name"]] = {"amount": macro["amount"], "unit": macro["unit"]}
+
 
         data["diets"] = recipe["diets"]
         data["ingredients"] = recipe["ingredientsCleaned"]
