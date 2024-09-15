@@ -1,9 +1,14 @@
 import requests, json
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Flask, jsonify
 
 def get_page():
-    time = datetime.today().strftime('%Y-%m-%d')
+    weekday = datetime.now().weekday()
+
+    if weekday == 6:
+        time = (datetime.today() + timedelta(hours=24)).strftime('%Y-%m-%d')
+    else:
+        time = datetime.today().strftime('%Y-%m-%d')
     url = 'https://www.compass-group.fi/menuapi/week-menus?costCenter=3026&date='+str(time)+'&language=fi'
     page = requests.get(url)
     return json.loads(page.content)
