@@ -21,7 +21,7 @@ def get_macros(id: int):
 
         macro_list = {}
         for macro in recipe["nutritionalValues"]:
-                macro_list[macro["name"]] = {"amount": macro["amount"], "unit": macro["unit"]}
+                macro_list[macro["name"].replace("\n", "")] = {"amount": macro["amount"], "unit": macro["unit"]}
 
 
         data["diets"] = recipe["diets"]
