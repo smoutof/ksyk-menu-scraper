@@ -39,7 +39,7 @@ def extract_data(page: dict):
         for package in menu["menuPackages"]:
             meals = []
             for meal in package["meals"]:
-                meals.append((meal["name"], get_macros(meal["recipeId"])))
+                meals.append((meal["name"].replace("\n", ""), get_macros(meal["recipeId"])))
 
             extracted[day].append({package["name"]: meals})
     return extracted
